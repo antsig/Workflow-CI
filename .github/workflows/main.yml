@@ -42,8 +42,9 @@ jobs:
           MLFLOW_TRACKING_URI: "https://dagshub.com/antsig/Model-SML.mlflow"
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
+          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          RUN_ID=$(python -c 'import mlflow; c=mlflow.tracking.MlflowClient(); print(next((r.info.run_id for r in c.search_runs([e.experiment_id for e in c.search_experiments()], order_by=["start_time desc"]) if "model" in [a.path for a in c.list_artifacts(r.info.run_id, "")]), ""))')
+          RUN_ID=$(python scripts/get_run_id.py)
           echo "RUN_ID=${RUN_ID}" >> $GITHUB_ENV
 
       - name: Install Python dependencies
@@ -61,8 +62,10 @@ jobs:
           MLFLOW_TRACKING_URI: "https://dagshub.com/antsig/Model-SML.mlflow"
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
+          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          mlflow models build-docker -m "runs:/${RUN_ID}/model" -n sml-model:latest
+          python scripts/download_model.py
+          mlflow models build-docker -m "model" -n sml-model:latest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
