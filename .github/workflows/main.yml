@@ -59,13 +59,15 @@ jobs:
       - name: Install Python dependencies
         run: pip install docker pydrive2
 
-      - name: Upload to Google Drive
-        env:
-          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+      - name: Upload to GitHub LFS
         run: |
-          echo "Uploading artifacts to Google Drive..."
-          # Implementasi upload DVC/Drive di sini jika ada scriptnya
-          # python upload_to_drive.py
+          echo "Uploading artifacts to GitHub LFS..."
+          # Implementasi git lfs track dan git push di sini jika ada file besar
+          # git lfs install
+          # git lfs track "*.pkl"
+          # git add .gitattributes *.pkl
+          # git commit -m "chore: upload models to LFS"
+          # git push origin master
 
       - name: Build Docker Model
         env:
