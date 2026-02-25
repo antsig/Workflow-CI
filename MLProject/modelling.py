@@ -27,6 +27,7 @@ def main():
         preds = clf.predict(X)
         acc = accuracy_score(y, preds)
         print(f"Accuracy on train set: {acc}")
+        mlflow.sklearn.log_model(clf, "model")
 
 if __name__ == "__main__":
     main()
