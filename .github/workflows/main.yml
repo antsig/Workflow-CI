@@ -62,8 +62,7 @@ jobs:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
         run: |
           echo "Uploading artifacts to Google Drive..."
-          # Implementasi upload DVC/Drive di sini jika ada scriptnya
-          # python upload_to_drive.py
+          python scripts/upload_to_drive.py
 
       - name: Build Docker Model
         env:
