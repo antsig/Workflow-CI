@@ -2,9 +2,14 @@ import dagshub
 import mlflow
 
 def main():
+    import sys
+    import contextlib
+
     try:
         # Patch MLflow with DagsHub credentials to allow searching artifacts remotely
-        dagshub.init(repo_owner='antsig', repo_name='Model-SML', mlflow=True)
+        # Redirect stdout to stderr to avoid polluting the RUN_ID capture
+        with contextlib.redirect_stdout(sys.stderr):
+            dagshub.init(repo_owner='antsig', repo_name='Model-SML', mlflow=True)
     except Exception as e:
         pass # Ignore failure if auth is already handled or fails locally
         
