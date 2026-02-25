@@ -14,9 +14,11 @@ def upload_to_drive():
         f.write(creds_json)
 
     gauth = GoogleAuth()
+    creds_dict = json.loads(creds_json)
     gauth.settings['client_config_backend'] = 'service'
     gauth.settings['service_config'] = {
-        'client_json_dict': json.loads(creds_json)
+        'client_json_dict': creds_dict,
+        'client_user_email': creds_dict.get('client_email', '')
     }
     
     try:
