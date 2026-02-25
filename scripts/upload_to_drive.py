@@ -44,16 +44,17 @@ def upload_to_drive():
                 
     if files_uploaded == 0:
         print("No models found in mlruns/0. Uploading the MLProject file instead for verification.")
-        if os.path.exists("MLProject"):
-            file_drive = drive.CreateFile({'title': 'MLProject_File'})
-            file_drive.SetContentFile("MLProject")
+        file_to_upload = "MLProject/MLProject"
+        if os.path.exists(file_to_upload):
+            file_drive = drive.CreateFile({'title': 'MLProject_Config'})
+            file_drive.SetContentFile(file_to_upload)
             try:
                 file_drive.Upload()
                 print("MLProject file uploaded successfully to Google Drive.")
             except Exception as e:
                 print(f"Failed to upload: {e}")
         else:
-            print("Nothing to upload.")
+            print(f"Nothing to upload. {file_to_upload} not found.")
 
 if __name__ == '__main__':
     upload_to_drive()
