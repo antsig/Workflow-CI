@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mlflow dagshub pandas scikit-learn matplotlib seaborn xgboost fastapi uvicorn prometheus-client setuptools<70.0
+          pip install mlflow dagshub pandas scikit-learn matplotlib seaborn xgboost fastapi uvicorn prometheus-client "setuptools<70.0"
 
       - name: Configure DagsHub
         env:
