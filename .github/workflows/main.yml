@@ -43,15 +43,7 @@ jobs:
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          RUN_ID=$(python -c '
-          from mlflow.tracking import MlflowClient
-          client = MlflowClient()
-          exp = client.get_experiment_by_name("MLProject_Run")
-          if exp:
-              runs = client.search_runs(exp.experiment_id, order_by=["start_time desc"], max_results=1)
-              if runs:
-                  print(runs[0].info.run_id)
-          ')
+          RUN_ID=$(python -c 'import mlflow; client = mlflow.tracking.MlflowClient(); exp = client.get_experiment_by_name("MLProject_Run"); print(client.search_runs(exp.experiment_id, order_by=["start_time desc"], max_results=1)[0].info.run_id) if exp else print("")')
           echo "RUN_ID=${RUN_ID}" >> $GITHUB_ENV
 
       - name: Install Python dependencies
