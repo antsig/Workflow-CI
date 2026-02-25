@@ -2,8 +2,8 @@ name: Train and Containerize
 
 on:
   push:
-    paths:
-      - "Workflow-CI/**"
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          cd Workflow-CI/MLProject
+          cd MLProject
           mlflow run . -P param1=value --no-conda
 
       - name: Get latest MLflow run id
