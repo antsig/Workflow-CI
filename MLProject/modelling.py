@@ -25,7 +25,10 @@ def main():
         
     X, y = get_data()
 
-    with mlflow.start_run(run_name="MLProject_Run"):
+    with mlflow.start_run() as run:
+        with open("run_id.txt", "w") as f:
+            f.write(run.info.run_id)
+            
         clf = RandomForestClassifier(random_state=42)
         clf.fit(X, y)
         preds = clf.predict(X)

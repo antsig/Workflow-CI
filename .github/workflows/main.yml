@@ -37,13 +37,8 @@ jobs:
 
       - name: Get latest MLflow run_id
         id: run_id
-        env:
-          MLFLOW_TRACKING_URI: "https://dagshub.com/antsig/Model-SML.mlflow"
-          MLFLOW_TRACKING_USERNAME: "antsig"
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
-          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          RUN_ID=$(python scripts/get_run_id.py)
+          RUN_ID=$(cat MLProject/run_id.txt)
           echo "RUN_ID=${RUN_ID}" >> $GITHUB_ENV
 
       - name: Install Python dependencies
