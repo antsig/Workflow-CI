@@ -12,8 +12,24 @@ def main():
         return
         
     print(f"Downloading model artifact for run {run_id}...")
-    local_path = mlflow.artifacts.download_artifacts(artifact_uri=f"runs:/{run_id}/model", dst_path="./model_workspace")
-    print(f"Model downloaded successfully to {local_path}")
+    
+    # Debug: List out the real artifacts inside the run
+    c = mlflow.tracking.MlflowClient()
+    try:
+        real_artifacts = c.list_artifacts(run_id)
+        print("Real artifacts found in run:")
+        for a in real_artifacts:
+            print(f" - {a.path} (is_dir: {a.is_dir})")
+    except Exception as e:
+        print(f"Failed to list artifacts: {e}")
+
+    try:
+        local_path = mlflow.artifacts.download_artifacts(artifact_uri=f"runs:/{run_id}/model", dst_path="./model_workspace")
+        print(f"Model downloaded successfully to {local_path}")
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise e
 
 if __name__ == "__main__":
     main()
