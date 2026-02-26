@@ -12,7 +12,7 @@ def main():
         return
         
     print(f"Downloading model artifact for run {run_id}...")
-    local_path = mlflow.artifacts.download_artifacts(artifact_uri=f"runs:/{run_id}/model", dst_path=".")
+    local_path = mlflow.artifacts.download_artifacts(artifact_uri=f"runs:/{run_id}/model", dst_path="./model_workspace")
     print(f"Model downloaded successfully to {local_path}")
 
 if __name__ == "__main__":

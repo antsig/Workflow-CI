@@ -40,8 +40,12 @@ def upload_to_drive():
                 print(f"Uploading {run_path} to Google Drive...")
                 file_drive = drive.CreateFile({'title': f'model_conda_{run_id}.yaml', 'parents': [{'id': folder_id}]})
                 file_drive.SetContentFile(run_path)
-                file_drive.Upload()
-                print(f"File uploaded successfully! ID: {file_drive['id']}")
+                try:
+                    file_drive.Upload()
+                    print(f"File uploaded successfully! ID: {file_drive['id']}")
+                except Exception as e:
+                    print(f"Failed to upload due to permissions or quota: {e}")
+                    print("Continuing pipeline...")
                 files_uploaded += 1
                 
     if files_uploaded == 0:
