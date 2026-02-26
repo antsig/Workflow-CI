@@ -25,14 +25,14 @@ def main():
         
     X, y = get_data()
 
-    mlflow.sklearn.autolog()
-
     with mlflow.start_run(run_name="MLProject_Run"):
         clf = RandomForestClassifier(random_state=42)
         clf.fit(X, y)
         preds = clf.predict(X)
         acc = accuracy_score(y, preds)
         print(f"Accuracy on train set: {acc}")
+        mlflow.log_metric("accuracy", acc)
+        mlflow.log_param("random_state", 42)
         mlflow.sklearn.log_model(clf, "model")
 
 if __name__ == "__main__":
