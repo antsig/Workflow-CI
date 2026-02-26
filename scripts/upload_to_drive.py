@@ -31,12 +31,14 @@ def upload_to_drive():
     target_dir = 'mlruns/0'
     files_uploaded = 0
     
+    folder_id = '1dTKyqFC__8SgiXov7t9lF-MK1iL9YB96'
+    
     if os.path.exists(target_dir):
         for run_id in os.listdir(target_dir):
             run_path = os.path.join(target_dir, run_id, 'artifacts', 'model', 'conda.yaml')
             if os.path.exists(run_path):
                 print(f"Uploading {run_path} to Google Drive...")
-                file_drive = drive.CreateFile({'title': f'model_conda_{run_id}.yaml'})
+                file_drive = drive.CreateFile({'title': f'model_conda_{run_id}.yaml', 'parents': [{'id': folder_id}]})
                 file_drive.SetContentFile(run_path)
                 file_drive.Upload()
                 print(f"File uploaded successfully! ID: {file_drive['id']}")
@@ -46,7 +48,7 @@ def upload_to_drive():
         print("No models found in mlruns/0. Uploading the MLProject file instead for verification.")
         file_to_upload = "MLProject/MLProject"
         if os.path.exists(file_to_upload):
-            file_drive = drive.CreateFile({'title': 'MLProject_Config'})
+            file_drive = drive.CreateFile({'title': 'MLProject_Config', 'parents': [{'id': folder_id}]})
             file_drive.SetContentFile(file_to_upload)
             try:
                 file_drive.Upload()
