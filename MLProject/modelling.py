@@ -17,6 +17,12 @@ def get_data():
     return X, y
 
 def main():
+    import dagshub
+    import sys
+    import contextlib
+    with contextlib.redirect_stdout(sys.stderr):
+        dagshub.init(repo_owner='antsig', repo_name='Model-SML', mlflow=True)
+        
     X, y = get_data()
 
     mlflow.sklearn.autolog()

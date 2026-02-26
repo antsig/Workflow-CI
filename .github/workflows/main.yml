@@ -32,7 +32,6 @@ jobs:
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          python -c "import dagshub; dagshub.init(repo_owner='antsig', repo_name='Model-SML', mlflow=True)"
           cd MLProject
           mlflow run . --env-manager=local
 
