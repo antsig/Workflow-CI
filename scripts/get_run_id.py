@@ -21,14 +21,9 @@ def main():
         
     runs = c.search_runs(exps, order_by=["start_time desc"])
     for r in runs:
-        try:
-            artifacts = [a.path for a in c.list_artifacts(r.info.run_id, "")]
-            if "model" in artifacts:
-                print(r.info.run_id)
-                return
-        except Exception:
-            # If we lack permission to list artifacts for an older run, skip
-            continue
+        if r.data.tags.get("mlflow.runName") == "MLProject_Run":
+            print(r.info.run_id)
+            return
             
     print("")
 
