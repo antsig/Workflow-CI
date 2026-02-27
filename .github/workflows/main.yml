@@ -62,8 +62,7 @@ jobs:
           MLFLOW_TRACKING_USERNAME: "antsig"
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          RUN_ID=$(cat MLProject/run_id.txt)
-          mlflow models build-docker -m "MLProject/mlruns/0/$RUN_ID/artifacts/model" -n sml-model:latest
+          mlflow models build-docker -m "../Membangun_model/mlruns/1/models/m-de1e9f7a3306491b96e88cc18eba129e/artifacts" -n sml-model:latest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
