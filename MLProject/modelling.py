@@ -37,6 +37,12 @@ def main():
         mlflow.log_metric("accuracy", acc)
         mlflow.log_param("random_state", 42)
         mlflow.sklearn.log_model(clf, "model")
+        
+        # Explicitly save model locally to guarantee Docker build bypassing DagsHub download issues
+        import shutil
+        if os.path.exists("local_model"):
+            shutil.rmtree("local_model")
+        mlflow.sklearn.save_model(clf, "local_model")
 
 if __name__ == "__main__":
     main()
