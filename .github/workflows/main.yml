@@ -33,7 +33,7 @@ jobs:
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           cd MLProject
-          python modelling.py
+          mlflow run . --env-manager=local
 
       - name: Get latest MLflow run_id
         id: run_id

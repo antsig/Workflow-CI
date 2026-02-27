@@ -8,12 +8,9 @@ import urllib.request
 
 # Fungsi helper untuk men-download dan pre-process data sementara di dalam MLProject
 def get_data():
-    os.makedirs('data', exist_ok=True)
-    if not os.path.exists('data/iris.csv'):
-        urllib.request.urlretrieve("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", "data/iris.csv")
-    df = pd.read_csv('data/iris.csv')
-    X = df.drop('species', axis=1)
-    y = df['species']
+    train_df = pd.read_csv('../Membangun_model/iris_preprocessing/train.csv')
+    X = train_df.drop('species', axis=1)
+    y = train_df['species']
     return X, y
 
 def main():
