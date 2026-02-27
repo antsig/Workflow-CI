@@ -51,6 +51,11 @@ jobs:
           echo "Uploading artifacts to Google Drive..."
           python scripts/upload_to_drive.py
 
+      - name: Debug Directory Structure
+        run: |
+          echo "Workspace Directory Tree:"
+          ls -laR
+
       - name: Build Docker Model
         env:
           MLFLOW_TRACKING_URI: "https://dagshub.com/antsig/Model-SML.mlflow"
