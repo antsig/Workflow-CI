@@ -25,6 +25,13 @@ jobs:
         run: |
           pip install mlflow dagshub pandas scikit-learn matplotlib seaborn xgboost fastapi uvicorn prometheus-client "setuptools<70.0"
 
+      - name: Fetch Preprocessed Data
+        run: |
+          git clone https://github.com/antsig/Eksperimen-SML.git temp_repo
+          mkdir -p ../Membangun_model/iris_preprocessing
+          cp -r temp_repo/Membangun_model/iris_preprocessing/* ../Membangun_model/iris_preprocessing/
+          rm -rf temp_repo
+
       - name: Run mlflow project
         env:
           DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
