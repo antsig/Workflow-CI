@@ -8,7 +8,7 @@ import urllib.request
 
 # Fungsi helper untuk men-download dan pre-process data sementara di dalam MLProject
 def get_data():
-    train_df = pd.read_csv('../Membangun_model/iris_preprocessing/train.csv')
+    train_df = pd.read_csv('iris_preprocessing/train.csv')
     X = train_df.drop('species', axis=1)
     y = train_df['species']
     return X, y

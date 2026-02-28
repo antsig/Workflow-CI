@@ -27,9 +27,9 @@ jobs:
 
       - name: Fetch Preprocessed Data
         run: |
-          mkdir -p ../Membangun_model/iris_preprocessing
-          curl -o ../Membangun_model/iris_preprocessing/train.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/train.csv
-          curl -o ../Membangun_model/iris_preprocessing/test.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/test.csv
+          mkdir -p MLProject/iris_preprocessing
+          curl -o MLProject/iris_preprocessing/train.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/train.csv
+          curl -o MLProject/iris_preprocessing/test.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/test.csv
 
       - name: Run mlflow project
         env:
