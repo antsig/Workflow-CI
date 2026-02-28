@@ -27,10 +27,9 @@ jobs:
 
       - name: Fetch Preprocessed Data
         run: |
-          git clone https://github.com/antsig/Eksperimen-SML.git temp_repo
           mkdir -p ../Membangun_model/iris_preprocessing
-          cp -r temp_repo/Membangun_model/iris_preprocessing/* ../Membangun_model/iris_preprocessing/
-          rm -rf temp_repo
+          curl -o ../Membangun_model/iris_preprocessing/train.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/train.csv
+          curl -o ../Membangun_model/iris_preprocessing/test.csv https://raw.githubusercontent.com/antsig/Model-SML/master/iris_preprocessing/test.csv
 
       - name: Run mlflow project
         env:
