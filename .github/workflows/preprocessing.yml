@@ -1,0 +1,44 @@
+name: Data Preprocessing
+
+on:
+  push:
+    paths:
+      - "Eksperimen_SML_Antonius_Sigid_Priharsanto/data_generator.py"
+      - "Eksperimen_SML_Antonius_Sigid_Priharsanto/preprocessing/automate_Antonius_Sigid_Priharsanto.py"
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12.7"
+
+      - name: Install Dependencies
+        run: pip install pandas scikit-learn
+
+      - name: Run Data Generator (Download Raw Data)
+        run: |
+          cd Eksperimen_SML_Antonius_Sigid_Priharsanto
+          python data_generator.py
+
+      - name: Run Preprocessing
+        run: |
+          cd Eksperimen_SML_Antonius_Sigid_Priharsanto/preprocessing
+          python automate_Antonius_Sigid_Priharsanto.py
+
+      - name: Commit Processed Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Membangun_model/iris_preprocessing/train.csv
+          git add Membangun_model/iris_preprocessing/test.csv
+          git commit -m "Auto-update preprocessed data [skip ci]" || echo "No changes to commit"
+          git push
