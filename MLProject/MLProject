@@ -3,4 +3,6 @@ conda_env: conda.yaml
 
 entry_points:
   main:
-    command: "python modelling.py"
+    parameters:
+      data_file: path
+    command: "python modelling.py {data_file}"
