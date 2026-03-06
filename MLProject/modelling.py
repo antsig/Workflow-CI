@@ -7,8 +7,16 @@ import os
 
 # Fungsi helper untuk men-download dan pre-process data sementara di dalam MLProject
 def get_data(data_file):
-    print(f"Loading data from {data_file}...")
-    train_df = pd.read_csv(data_file)
+    if data_file and os.path.exists(data_file):
+        print(f"Loading data from {data_file}...")
+        train_df = pd.read_csv(data_file)
+    else:
+        print("Data file not found or not provided. Fetching dataset dynamically...")
+        from sklearn.datasets import load_breast_cancer
+        data = load_breast_cancer()
+        train_df = pd.DataFrame(data.data, columns=data.feature_names)
+        train_df['target'] = data.target
+
     X = train_df.drop('target', axis=1)
     y = train_df['target']
     return X, y
@@ -49,7 +57,7 @@ if __name__ == "__main__":
     import sys
     # MLflow on Windows might split the path at spaces or pass literal quotes
     # Rejoin array to handle space splitting and strip literal quotes
-    data_file = " ".join(sys.argv[1:]).strip('"').strip("'") if len(sys.argv) > 1 else None
-    if not data_file:
-        raise ValueError("Missing data_file parameter")
+    data_file = " ".join(sys.argv[1:]).strip('"').strip("'") if len(sys.argv) > 1 else ""
+    if data_file.lower() == "none":
+        data_file = ""
     main(data_file)
